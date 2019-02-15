@@ -1,0 +1,316 @@
+@charset "utf-8";
+body,
+html,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+input,
+textarea,
+p,
+blockquote,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+body,
+html {
+  background: #fff;
+  font-size: 14px;
+  font-family: "Microsoft YaHei", "arial", "\5b8b\4f53", "sans-serif";
+  -webkit-text-size-adjust: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 14px;
+  font-weight: normal;
+}
+a {
+  text-decoration: none;
+  font-family: "Microsoft YaHei", "arial", "\5b8b\4f53", "sans-serif";
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  color:#333;
+}
+
+img {
+  // display: block;
+  border: 0;
+}
+ul,
+li {
+  list-style: none;
+}
+input,
+label,
+select,
+option,
+textarea,
+button,
+fieldset,
+legend {
+  font-size: 14px;
+  font-family: "Microsoft YaHei", "arial", "\5b8b\4f53", "sans-serif";
+  _font-family: Arial, sans-serif;
+}
+input[type="text"],
+textarea {
+  -webkit-appearance: none;
+  outline: none;
+}
+textarea {
+  resize: none;
+}
+em,
+i {
+  font-style: normal;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+//浮动
+/*
+* 左浮动
+**/
+@mixin fl($f: left, $display: block) {
+  float: $f;
+  display: $display;
+}
+/*
+* 右浮动
+**/
+@mixin fr($f: right, $display: block) {
+  float: $f;
+  display: $display;
+}
+
+/*
+*  清楚浮动
+**/
+@mixin clearfix() {
+  *zoom: 1;
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+//-------------全局定位-------------
+/*
+* 定位  r:相对定位; a: 绝对定位; f:基于浏览器
+*/
+@mixin rel($rel: relative) {
+  position: $rel;
+}
+@mixin abs($abs: absolute) {
+  position: $abs;
+}
+@mixin fix($fix: fixed) {
+  position: fixed;
+}
+/*
+* 左上定位
+**/
+@mixin pos-lt($top: 0, $left: 0, $zIndex: 1, $pos: absolute) {
+  position: $pos;
+  top: $top;
+  left: $left;
+  z-index: $zIndex;
+}
+/*
+* 右上定位
+**/
+@mixin pos-rt($top: 0, $right: 0, $zIndex: 1, $pos: absolute) {
+  position: $pos;
+  top: $top;
+  right: $right;
+  z-index: $zIndex;
+}
+/*
+* 左下定位
+**/
+@mixin pos-lb($bottom: 0, $left: 0, $zIndex: 1, $pos: absolute) {
+  position: $pos;
+  bottom: $bottom;
+  left: $left;
+  z-index: $zIndex;
+}
+/*
+* 左下定位
+**/
+@mixin pos-rb($bottom: 0, $right: 0, $zIndex: 1, $pos: absolute) {
+  position: $pos;
+  bottom: $bottom;
+  right: $right;
+  z-index: $zIndex;
+}
+
+/*
+* 上下左右垂直居中
+*  $pos: 定位位置;
+*  $left,$right,$top,$bottom 方向 (ps: @mixin pos-cc($top:10px;$bottom:'') 可以居上10px ;左右居中)
+**/
+@mixin pos-cc($pos: absolute, $left: 0, $right: 0, $top: 0, $bottom: 0) {
+  position: $pos;
+  left: $left;
+  right: $right;
+  top: $top;
+  bottom: $bottom;
+  margin: auto;
+}
+
+/*
+* 宽度 高度
+**/
+@mixin wh($w: 100%, $h: auto) {
+  width: $w;
+  height: $h;
+}
+/*
+* 文字 垂直居中
+**/
+@mixin text-ll($h: auto, $lh: $h) {
+  height: $h;
+  line-height: $lh;
+}
+
+@mixin text-cl($h: auto, $lh: $h) {
+  text-align: center;
+  height: $h;
+  line-height: $lh;
+}
+/*
+* 文字 水平 位置
+**/
+@mixin text-c() {
+  text-align: center;
+}
+@mixin text-l() {
+  text-align: left;
+}
+@mixin text-r() {
+  text-align: right;
+}
+
+/*
+* 元素 display
+**/
+@mixin block($block: block) {
+  display: $block;
+}
+@mixin inline-block($inline-block: inline-block) {
+  display: $inline-block;
+}
+@mixin inline($inline: inline) {
+  display: $inline;
+}
+@mixin none($none: none) {
+  display: $none;
+}
+
+/*
+* font 字体
+**/
+@mixin font($size: 14px, $color: "") {
+  font-size: $size;
+  color: $color;
+}
+@mixin font-b($size: 14px, $color: "", $weight: 700) {
+  font-size: $size;
+  color: $color;
+  font-weight: $weight;
+}
+@mixin color($color: #333) {
+  color: $color;
+}
+/*
+* 显示省略号
+**/
+@mixin ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+//透明度
+@mixin opa($opacity: 80) {
+  opacity: $opacity / 100;
+  // filter: ~"alpha(opacity=@{opacity})";
+}
+
+/*  类名  */
+/*
+* 清除浮动
+**/
+.g-clearfix {
+  @include clearfix();
+}
+.g-fl {
+  @include fl();
+}
+.g-fr {
+  @include fr();
+}
+/*
+* 超出显示省略号
+**/
+.g-ellipsis {
+  @include ellipsis();
+}
+.g-block {
+  @include block();
+}
+.g-inline-block {
+  @include inline-block();
+}
+.g-inline {
+  @include inline();
+}
+.g-none {
+  @include none();
+}
+.g-text-c {
+  @include text-c();
+}
+.g-text-l {
+  @include text-l();
+}
+.g-text-r {
+  @include text-r();
+}
+
+/** 页面 回到顶端按钮样式 */
+.totop {
+  width: 40px;
+  display: none;
+  position: absolute;
+  z-index: 50;
+  bottom: 6%;
+  right: 1%;
+}
