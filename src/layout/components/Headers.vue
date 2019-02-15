@@ -7,7 +7,7 @@
         <i class="el-icon-setting" style="margin-right: 15px"></i>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>查看</el-dropdown-item>
-          <el-dropdown-item @click.native="quit">退出</el-dropdown-item>
+          <el-dropdown-item @click.native="quit">退 出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <span>王小虎</span>
