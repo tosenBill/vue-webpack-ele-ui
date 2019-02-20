@@ -10,6 +10,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 // 你的样式将不会内联到 JS bundle，而是在一个单独的 CSS 文件。
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const baseConfig = require('./webpack.config.base')
+const VueClientPlugin = require('vue-server-renderer/client-plugin')
 const merge = require('webpack-merge')
 const isDev = process.env.NODE_ENV === 'development'
 // webpack打包文件体积和依赖关系的可视化
@@ -25,15 +26,16 @@ const defaultPlugins = [
 	// 打包生成html文件
 	new HtmlWebpackPlugin({
 		filename: 'index.html',
-		template: './src/index.html',
+		template: './client/index.html',
 		title: 'adolf'
 	}),
-	new VueLoaderPlugin()
+	new VueLoaderPlugin(),
+	new VueClientPlugin()
 ]
 
 const devServer = {
 	host: '0.0.0.0',
-	port: 8091,
+	port: 8090,
 	// 在浏览器上全屏显示编译的errors或warnings。默认是关闭的
 	overlay: {
 		error: true,
@@ -124,7 +126,32 @@ if (isDev) {
 				filename: 'css/[name].css',
 				allChunks: true
 			})
-		])
+		]),
+		optimization: {
+			minimize: !isDev, // 是否进行代码压缩
+			splitChunks: {
+				chunks: 'initial',
+				minSize: 30000, // 模块大于30k会被抽离到公共模块
+				minChunks: 1, // 模块出现1次就会被抽离到公共模块
+				maxAsyncRequests: 5, // 异步模块，一次最多只能被加载5个
+				maxInitialRequests: 3, // 入口模块最多只能加载3个
+				name: true,
+				cacheGroups: {
+					default: {
+						minChunks: 2,
+						priority: -20,
+						reuseExistingChunk: true
+					},
+					vendors: {
+						test: /[\\/]node_modules[\\/]/,
+						priority: -10
+					}
+				}
+			},
+			runtimeChunk: {
+				name: 'runtime'
+			}
+		}
 	})
 }
 

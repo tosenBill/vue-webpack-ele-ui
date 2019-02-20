@@ -12,7 +12,7 @@
 
 <script>
 import Asides from './components/Aside.vue'
-import Headers from './components/Headers.vue'
+// import Headers from './components/Headers.vue'
 
 // import global from '../assets/styles/global.styl'
 export default {
@@ -23,17 +23,17 @@ export default {
 		}
 	},
 	components: {
-		Asides,
-		Headers
+		Asides
+		// Headers
 	},
 	created () {
 	},
 	mounted() {
-		this.getScreenHeight = `${document.documentElement.clientHeight}`
+		// this.getScreenHeight = `${document.documentElement.clientHeight}`
 		// 然后监听window的resize事件．在浏览器窗口变化时再设置下背景图高度．
-		window.onresize = () => {
-			this.getScreenHeight = `${document.documentElement.clientHeight}`
-		}
+		// window.onresize = () => {
+		// 	this.getScreenHeight = `${document.documentElement.clientHeight}`
+		// }
 	}
 }
 </script>

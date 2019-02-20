@@ -1,14 +1,16 @@
 const path = require('path')
-const isDev = process.env.NODE_ENV === 'development'
+// const isDev = process.env.NODE_ENV === 'development'
 
 const config = {
 	target: 'web',
-	entry: {
-		index: path.join(__dirname, '../src/index.js')
-	},
+	entry: path.join(__dirname, '../client/index.js'),
+	// entry: {
+	// 	index: path.join(__dirname, '../client/index.js')
+	// },
 	output: {
 		path: path.join(__dirname, '../dist'),
-		filename: 'js/[name].[hash:4].js'
+		filename: 'js/[name].[hash:4].js',
+		publicPath: 'http://127.0.0.1:8090/dist/'
 	},
 	module: {
 		rules: [
@@ -26,7 +28,7 @@ const config = {
 				loader: 'eslint-loader',
 				enforce: 'pre',
 				exclude: /node_modules/,
-				include: [path.resolve(__dirname, 'src')], // 指定检查的目录
+				include: [path.resolve(__dirname, 'client')], // 指定检查的目录
 				options: { // 这里的配置项参数将会被传递到 eslint 的 CLIEngine
 					formatter: require('eslint-friendly-formatter') // 指定错误报告的格式规范
 				}
@@ -58,35 +60,10 @@ const config = {
 	},
 	resolve: {
 		alias: {
-			Api: path.resolve(__dirname, '../src/api/index.js'),
+			Api: path.resolve(__dirname, '../client/api/index.js'),
 			vue: 'vue/dist/vue.js',
-			'@': path.resolve('src'),
-			'@view': path.resolve(__dirname, '../src/views')
-		}
-	},
-	optimization: {
-		minimize: !isDev, // 是否进行代码压缩
-		splitChunks: {
-			chunks: 'all',
-			minSize: 30000, // 模块大于30k会被抽离到公共模块
-			minChunks: 1, // 模块出现1次就会被抽离到公共模块
-			maxAsyncRequests: 5, // 异步模块，一次最多只能被加载5个
-			maxInitialRequests: 3, // 入口模块最多只能加载3个
-			name: true,
-			cacheGroups: {
-				default: {
-					minChunks: 2,
-					priority: -20,
-					reuseExistingChunk: true
-				},
-				vendors: {
-					test: /[\\/]node_modules[\\/]/,
-					priority: -10
-				}
-			}
-		},
-		runtimeChunk: {
-			name: 'runtime'
+			'@': path.resolve('client'),
+			'@view': path.resolve(__dirname, '../client/views')
 		}
 	}
 }

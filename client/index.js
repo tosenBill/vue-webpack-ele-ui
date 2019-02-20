@@ -3,7 +3,7 @@ import Vue from 'vue'
 import 'element-ui/lib/theme-chalk/index.css'
 // import {Row,Col,Button,Notification,Message} from 'element-ui'  //按需引用element-ui组件
 import ElementUI from 'element-ui'
-import '../src/assets/css/main.scss'
+import '../client/assets/css/main.scss'
 
 import axios from 'axios'
 
