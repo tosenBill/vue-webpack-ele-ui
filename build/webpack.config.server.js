@@ -25,7 +25,6 @@ if (isDev) {
 		output: {
 			libraryTarget: 'commonjs2',
 			filename: 'server-entry.js',
-			globalObject: 'this',
 			path: path.join(__dirname, '../server-build')
 		},
 		externals: Object.keys(require('../package.json').dependencies),
@@ -39,7 +38,7 @@ if (isDev) {
 							'css-loader',
 							'stylus-loader'
 						],
-						publicPath: '../' // css打包后images下url 路径问题
+						publicPath: '/' // css打包后images下url 路径问题
 					})
 				},
 				{
@@ -49,7 +48,8 @@ if (isDev) {
 						use: [
 							'css-loader',
 							'sass-loader'
-						]
+						],
+						publicPath: '/' // css打包后images下url 路径问题
 					})
 					// loader: ExtractTextPlugin.extract('style', 'css!sass') // 这里用了样式分离出来的插件，如果不想分离出来，可以直接这样写 loader:'style!css!sass'
 				}

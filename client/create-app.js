@@ -6,7 +6,7 @@ import App from './app.vue'
 import router from './router/router'
 import store from './store/index'
 
-// import '../client/assets/css/main.scss'
+import '../client/assets/css/main.scss'
 
 Vue.use(VueRouter)
 Vue.use(Vuex)

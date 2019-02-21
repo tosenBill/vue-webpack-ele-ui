@@ -79,7 +79,7 @@ export default {
 	watch: {
 		$route: {
 			handler (val) {
-				console.log(this.$route)
+				// console.log(this.$route)
 				const { matched } = val
 				this.subMenuActive = [matched[0].path || '/set']
 			},

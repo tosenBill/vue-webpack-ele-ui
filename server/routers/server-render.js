@@ -2,14 +2,14 @@ const ejs = require('ejs')
 
 module.exports = async (ctx, renderer, template) => {
 	ctx.headers['Content-Type'] = 'text/html'
-
+	// ctx.headers['Access-Control-Allow-Origin'] = '*'
 	const context = { url: ctx.path }
-		console.log('context:    ', context)
 	try {
-		console.log('111')
 		const appString = await renderer.renderToString(context)
 
-		// console.log('appString', appString)
+		// if (context.router.currentRoute.fullPath !== ctx.path) {
+    //   return ctx.redirect(context.router.currentRoute.fullPath)
+    // }
 
 		// const {
     //   title
@@ -20,11 +20,9 @@ module.exports = async (ctx, renderer, template) => {
 			style: context.renderStyles(),
 			scripts: context.renderScripts()
 		})
-		console.log('html', html)
-		context.body = html
-		console.log('context.body-----', context.body)
+		ctx.body = html
 	} catch (err) {
-		console.log('render error', err)
+		console.log('render error1', err)
 		throw err
 	}
 }

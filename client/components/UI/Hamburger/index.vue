@@ -43,7 +43,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
 .hamburger {
   display: inline-block;
   cursor: pointer;
