@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
-    "test": "cross-env NODE_ENV=development webpack --config build/webpack.config.client.js",
+    "clean": "rimraf dist && rimraf server-build",
     "analyz": "cross-env NODE_ENV=production npm_config_report=true npm run build",
     "build": "cross-env NODE_ENV=production webpack --config build/webpack.config.client.js",
     "lint": "eslint --ext .js --ext .jsx --ext vue src/",
