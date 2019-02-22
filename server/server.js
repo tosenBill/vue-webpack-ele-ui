@@ -1,22 +1,15 @@
+const path = require('path')
 const Koa = require('koa')
+const consola = require('consola')
 const send = require('koa-send')
-const pageRouter = require('./routers/dev-ssr')
+
+const staticRouter = require('./routers/static')
+// const pageRouter = require('./routers/dev-ssr') // module.exports = router
+
 const app = new Koa()
 // const cors = require('koa-cors')
-const path = require('path')
 
 const isDev = process.env.NODE_ENV === 'development'
-
-// app.use('*', (req, res, next) => {
-// 	res.header('Access-Control-Allow-Origin', '*')
-// 	res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length, Authorization, Accept,X-Requested-With')
-// 	res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS')
-// 	if (req.method === 'OPTIONS') {
-// 			res.send(200)
-// 	} else {
-// 			next()
-// 	}
-// })
 // app.use(cors())
 // app.use((req, res, next) => {
 // 	res.header('Access-Control-Allow-Origin', '*')
@@ -28,10 +21,6 @@ const isDev = process.env.NODE_ENV === 'development'
 app.use(async (ctx, next) => {
 	try {
 		// console.log(`request with path ${ctx.path}`)
-		ctx.header['Access-Control-Allow-Origin'] = '*'
-		ctx.header['Access-Control-Allow-Headers'] = 'X-Requested-With,Content-Type'
-		ctx.header['Access-Control-Allow-Methods'] = 'PUT,POST,GET,DELETE,OPTIONS'
-		console.log(ctx.header['Access-Control-Allow-Origin'])
 		await next()
 	} catch (err) {
 		console.log(err)
@@ -51,11 +40,23 @@ app.use(async (ctx, next) => {
     await next()
   }
 })
+
+app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
+
+let pageRouter
+if (isDev) {
+	pageRouter = require('./routers/dev-ssr')
+} else {
+	pageRouter = require('./routers/ssr')
+}
+
 app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
 const HOST = process.env.HOST || '0.0.0.0'
 const PORT = process.env.PORT || 3331
 
-app.listen(PORT, HOST, () => {
-	console.log(`server is listening on ${HOST}:${PORT}`)
+app.listen(PORT, HOST)
+consola.ready({
+	message: `Server listening on http://${HOST}:${PORT}`,
+	badge: true
 })

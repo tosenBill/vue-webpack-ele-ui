@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import createApp from './create-app'
 
 import 'element-ui/lib/theme-chalk/index.css'
 // import {Row,Col,Button,Notification,Message} from 'element-ui'  //按需引用element-ui组件
@@ -24,10 +25,16 @@ Vue.prototype.$http = axios
 Vue.prototype.myApi = api
 Vue.prototype.$Utils = utils
 
+const { app } = createApp()
+
 const _Vue = new Vue({
 	// el: '#app',
 	router,
 	store,
 	render: (h) => h(App)
-}).$mount('#app')
+})
 window._Vue = _Vue
+
+router.onReady(() => {
+	app.$mount('#app')
+})

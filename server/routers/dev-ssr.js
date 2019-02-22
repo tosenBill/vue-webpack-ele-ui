@@ -1,4 +1,3 @@
-
 const Router = require('koa-router')
 const axios = require('axios')
 const path = require('path')
@@ -15,7 +14,7 @@ const mfs = new MemoryFS()
 serverCompiler.outputFileSystem = mfs
 
 let bundle
-// 类似于webpack-dev-server
+// 编译出server-bundle
 serverCompiler.watch({}, (err, stats) => {
   if (err) throw err
   stats = stats.toJson()
@@ -37,7 +36,7 @@ const handleSSR = async (ctx) => {
   }
 
   const clientManifestResp = await axios.get(
-		'http://127.0.0.1:8090/vue-ssr-client-manifest.json'
+		'http://127.0.0.1:8090/dist/vue-ssr-client-manifest.json'
   )
   const clientManifest = clientManifestResp.data
   const template = fs.readFileSync(

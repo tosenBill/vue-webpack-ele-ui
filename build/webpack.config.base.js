@@ -10,7 +10,7 @@ const config = {
 	output: {
 		path: path.join(__dirname, '../dist'),
 		filename: 'js/[name].[hash:4].js',
-		publicPath: 'http://127.0.0.1:8090/'
+		publicPath: 'http://127.0.0.1:8090/dist/'
 	},
 	module: {
 		rules: [

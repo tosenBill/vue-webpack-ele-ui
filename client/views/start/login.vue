@@ -40,6 +40,9 @@ import { mapGetters } from 'vuex'
 import * as types from '@/store/type'
 import { isvalidUsername } from '@/utils/validate'
 export default {
+	meataInfo: {
+		title: 'login meata'
+	},
 	data() {
 		const validateUsername = (urle, value, callback) => {
 			if (!isvalidUsername(value)) {

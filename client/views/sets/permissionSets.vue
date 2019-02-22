@@ -5,6 +5,9 @@
 </template>
 <script>
 export default {
+	metaInfo: {
+		title: '权限设置meta'
+	},
 	data () {
 		return {
 			test: 111

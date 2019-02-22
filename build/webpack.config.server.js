@@ -11,64 +11,67 @@ const isDev = process.env.NODE_ENV === 'development'
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
 // 使用DefinePlugin设定环境变量
 const defaultPlugins = [
-	new VueLoaderPlugin()
+	new VueLoaderPlugin(),
+	new VueServerPlugin()
 ]
 
-let config
+// let config
 
 if (isDev) {
-	config = merge(baseConfig, {
-		target: 'node',
-		entry: path.join(__dirname, '../client/server-entry.js'),
-		mode: 'development',
-		devtool: 'source-map',
-		output: {
-			libraryTarget: 'commonjs2',
-			filename: 'server-entry.js',
-			path: path.join(__dirname, '../server-build')
-		},
-		externals: Object.keys(require('../package.json').dependencies),
-		module: {
-			rules: [
-				{
-					test: /\.styl/, // 注意这个地方没有 ‘$’
-					use: ExtractTextPlugin.extract({
-						fallback: 'vue-style-loader',
-						use: [
-							'css-loader',
-							'stylus-loader'
-						],
-						publicPath: '/' // css打包后images下url 路径问题
-					})
-				},
-				{
-					test: /\.(sass|scss)$/,
-					use: ExtractTextPlugin.extract({
-						fallback: 'vue-style-loader',
-						use: [
-							'css-loader',
-							'sass-loader'
-						],
-						publicPath: '/' // css打包后images下url 路径问题
-					})
-					// loader: ExtractTextPlugin.extract('style', 'css!sass') // 这里用了样式分离出来的插件，如果不想分离出来，可以直接这样写 loader:'style!css!sass'
-				}
-			]
-		},
-		plugins: defaultPlugins.concat([
-			new ExtractTextPlugin({
-				filename: 'css/[name].css',
-				allChunks: true
-			}),
-			new webpack.DefinePlugin({
-				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-				'process.env.VUE_ENV': '"server"'
-			}),
-			new VueServerPlugin()
-		])
-	})
+	defaultPlugins.push(
+		// new VueServerPlugin()
+	)
 } else {
 	console.log('production')
 }
+const config = merge(baseConfig, {
+	target: 'node',
+	entry: path.join(__dirname, '../client/server-entry.js'),
+	// mode: 'development',
+	devtool: 'source-map',
+	output: {
+		libraryTarget: 'commonjs2',
+		filename: 'server-entry.js',
+		path: path.join(__dirname, '../server-build')
+	},
+	externals: Object.keys(require('../package.json').dependencies),
+	module: {
+		rules: [
+			{
+				test: /\.styl/, // 注意这个地方没有 ‘$’
+				use: ExtractTextPlugin.extract({
+					fallback: 'vue-style-loader',
+					use: [
+						'css-loader',
+						'stylus-loader'
+					],
+					publicPath: '/' // css打包后images下url 路径问题
+				})
+			},
+			{
+				test: /\.(sass|scss)$/,
+				use: ExtractTextPlugin.extract({
+					fallback: 'vue-style-loader',
+					use: [
+						'css-loader',
+						'sass-loader'
+					],
+					publicPath: '/' // css打包后images下url 路径问题
+				})
+				// loader: ExtractTextPlugin.extract('style', 'css!sass') // 这里用了样式分离出来的插件，如果不想分离出来，可以直接这样写 loader:'style!css!sass'
+			}
+		]
+	},
+	plugins: defaultPlugins.concat([
+		new ExtractTextPlugin({
+			filename: 'css/[name].css',
+			allChunks: true
+		}),
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+			'process.env.VUE_ENV': '"server"'
+		})
+	])
+})
 
 module.exports = config

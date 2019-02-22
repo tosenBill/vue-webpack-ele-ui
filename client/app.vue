@@ -6,7 +6,9 @@
 
 <script>
 export default {
-	name: 'App'
+	metaInfo: {
+		title: 'adolf\'s app'
+	}
 }
 </script>
 <style lang="stylus" scoped>

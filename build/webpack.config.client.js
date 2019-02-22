@@ -1,9 +1,9 @@
-const path = require('path')
+// const path = require('path')
 const webpack = require('webpack')
 // 用于插入html模板
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // 清除输出目录，免得每次手动删除
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+// const CleanWebpackPlugin = require('clean-webpack-plugin')
 // Vue-loader在15.*之后的版本都是 vue-loader的使用都是需要伴生 VueLoaderPlugin
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 // 它会将所有 required 的 *.css 模块抽取到分离的 CSS 文件。
@@ -14,7 +14,7 @@ const VueClientPlugin = require('vue-server-renderer/client-plugin')
 const merge = require('webpack-merge')
 const isDev = process.env.NODE_ENV === 'development'
 // webpack打包文件体积和依赖关系的可视化
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 // 使用DefinePlugin设定环境变量
 const defaultPlugins = [
@@ -89,7 +89,8 @@ if (isDev) {
 	config = merge(baseConfig, {
 		mode: 'production',
 		output: {
-			filename: '[name].[chunkhash:8].js'
+			filename: '[name].[chunkhash:8].js',
+			publicPath: '/dist/'
 		},
 		module: {
 			rules: [
@@ -118,10 +119,10 @@ if (isDev) {
 			]
 		},
 		plugins: defaultPlugins.concat([
-			new CleanWebpackPlugin(['dist'], {
-				root: path.resolve(__dirname, '../')   // 根目录
-			}),
-			new BundleAnalyzerPlugin({ analyzerPort: 8919 }),
+			// new CleanWebpackPlugin(['dist'], {
+			// 	root: path.resolve(__dirname, '../')   // 根目录
+			// }),
+			// new BundleAnalyzerPlugin({ analyzerPort: 8919 }),
 			new ExtractTextPlugin({
 				filename: 'css/[name].css',
 				allChunks: true
